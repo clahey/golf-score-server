@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { ApolloWrapper } from "./ApolloWrapper";
+
+const client = new ApolloClient({ uri: "http://localhost:3000/api/graphql", cache: new InMemoryCache() });
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,7 +32,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ApolloWrapper>
+          {children}
+        </ApolloWrapper>
       </body>
     </html>
   );

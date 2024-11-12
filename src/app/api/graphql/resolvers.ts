@@ -29,7 +29,8 @@ async function withDatabase<T>(block: ((db: Db) => Promise<T>)): Promise<T> {
 
 export const resolvers = {
     Player: {
-        name: (parent: any) => parent.name
+        name: (player: any) => player.name,
+        id: (player: any) => player._id
     },
     PlayerWithScores: {
         player: async (playerWithScores: any) => withDatabase((db) =>
