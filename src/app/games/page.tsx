@@ -1,8 +1,9 @@
+"use client"
+
 import { gql } from "@/graphql";
 import { useQuery } from "@apollo/client";
-import { Console } from "console";
 
-export function GameList() {
+export default function GameList() {
     const QUERY = gql(`
       query GetGames {
         games {
