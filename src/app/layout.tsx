@@ -1,6 +1,7 @@
 
 import { DashboardLayout } from '@toolpad/core';
 import { AppProvider } from '@toolpad/core/nextjs';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 
 import { ApolloWrapper } from "./ApolloWrapper";
 import { BRANDING } from './branding';
@@ -15,13 +16,15 @@ export default function RootLayout({
   return (
     <html>
       <body>
-        <AppProvider navigation={NAVIGATION} branding={BRANDING}>
-          <ApolloWrapper>
-            <DashboardLayout>
-              {children}
-            </DashboardLayout>
-          </ApolloWrapper>
-        </AppProvider>
+        <AppRouterCacheProvider>
+          <AppProvider navigation={NAVIGATION} branding={BRANDING}>
+            <ApolloWrapper>
+              <DashboardLayout>
+                {children}
+              </DashboardLayout>
+            </ApolloWrapper>
+          </AppProvider>
+        </AppRouterCacheProvider>
       </body>
     </html>
   );
