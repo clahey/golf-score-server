@@ -2,6 +2,10 @@ import gql from "graphql-tag";
 
 
 export const typeDefs = gql`
+  type Course {
+    facility: String
+    name: String
+  }
   type Player {
     id: String!
     name: String!
@@ -13,7 +17,8 @@ export const typeDefs = gql`
   }
   type Game {
     id: String!
-    description: String!
+    description: String
+    course: Course
     participants: [PlayerWithScores!]!
   }
 

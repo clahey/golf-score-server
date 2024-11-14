@@ -40,6 +40,23 @@ export const resolvers = {
 
     Game: {
         participants: (game: any) => game.players,
+        course: async (game: any) => withDatabase((db) => db.collection("Courses").findOne({ _id: game.course})),
+        description: async (game: any) => {
+            if (game.description) return game.description
+            const course = await (game.course && withDatabase((db) => db.collection("Courses").findOne({ _id: game.course })))
+            const date = game.date
+            const courseSegments = []
+            if (course?.facility)
+                courseSegments.push(course?.facility)
+            if (course?.name)
+                courseSegments.push(course?.name)
+            const segments = []
+            if (courseSegments)
+                segments.push(courseSegments.join(" - "))
+            if (game.date)
+                segments.push(`(${game.date.toLocaleDateString(undefined, {month: "short", day: "numeric"})})`)
+            return segments.join(" ")
+        },
         id: (game: any) => game._id,
     },
 
