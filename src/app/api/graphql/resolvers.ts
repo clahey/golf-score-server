@@ -34,7 +34,8 @@ export const resolvers = {
     },
     PlayerWithScores: {
         player: async (playerWithScores: any) => withDatabase((db) =>
-            db.collection("Players").findOne({ _id: playerWithScores.id }))
+            db.collection("Players").findOne({ _id: playerWithScores.id })),
+        total: (playerWithScores: any) => playerWithScores.scores.reduce((a: number, b: number) => a + b, 0)
     },
 
     Game: {

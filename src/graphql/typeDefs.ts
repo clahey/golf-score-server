@@ -8,6 +8,7 @@ export const typeDefs = gql`
   }
   type PlayerWithScores {
     player: Player
+    total: Int!
     scores: [Int]!
   }
   type Game {
