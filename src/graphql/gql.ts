@@ -14,7 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 const documents = {
-    "\n      query GetGames {\n        games {\n          id\n          description\n          participants { player { name }}\n        }\n      }\n    ": types.GetGamesDocument,
+    "\n      query GetGames {\n        games {\n          id\n          description\n          participants {\n            player { name }\n            total\n          }\n        }\n      }\n    ": types.GetGamesDocument,
 };
 
 /**
@@ -34,7 +34,7 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n      query GetGames {\n        games {\n          id\n          description\n          participants { player { name }}\n        }\n      }\n    "): (typeof documents)["\n      query GetGames {\n        games {\n          id\n          description\n          participants { player { name }}\n        }\n      }\n    "];
+export function gql(source: "\n      query GetGames {\n        games {\n          id\n          description\n          participants {\n            player { name }\n            total\n          }\n        }\n      }\n    "): (typeof documents)["\n      query GetGames {\n        games {\n          id\n          description\n          participants {\n            player { name }\n            total\n          }\n        }\n      }\n    "];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

@@ -2,6 +2,7 @@
 
 import { gql } from "@/graphql";
 import { useQuery } from "@apollo/client";
+import { Card, CardContent, CardHeader, Container, Stack } from "@mui/material";
 
 export default function GameList() {
     const QUERY = gql(`
@@ -9,7 +10,10 @@ export default function GameList() {
         games {
           id
           description
-          participants { player { name }}
+          participants {
+            player { name }
+            total
+          }
         }
       }
     `);
@@ -19,19 +23,23 @@ export default function GameList() {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error : {error.message}</p>;
     return (
-        <div>
-            <h1> Games! </h1>
-            {data?.games?.map(({ id, description, participants }) => (
-                <div key="{id}">
-                    <h1>{description}</h1>
-                    <ul>
-                        {participants.map(p => (
-                            <li key="{p.player.id}">{p.player?.name}</li>
-                        ))}
-                    </ul>
-                </div>)
-            )}
-        </div>
+        <Container>
+            <Stack>
+                <h1> Games! </h1>
+                {data?.games?.map(({ id, description, participants }) => (
+                    <Card key="{id}">
+                        <CardHeader title={description}></CardHeader>
+                        <CardContent>
+                            <ul>
+                                {participants.map(p => (
+                                    <li key="{p.player.id}">{p.player?.name} - {p.total}</li>
+                                ))}
+                            </ul>
+                            </CardContent>
+                    </Card>)
+                )}
+            </Stack>
+        </Container>
     )
 }
 
