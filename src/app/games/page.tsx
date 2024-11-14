@@ -2,7 +2,7 @@
 
 import { gql } from "@/graphql";
 import { useQuery } from "@apollo/client";
-import { Card, CardContent, CardHeader, Container, Stack } from "@mui/material";
+import { Card, CardContent, CardHeader, Container, Stack, Typography } from "@mui/material";
 
 export default function GameList() {
     const QUERY = gql(`
@@ -25,7 +25,7 @@ export default function GameList() {
     return (
         <Container>
             <Stack>
-                <h1> Games! </h1>
+                <Typography variant="h4">Games</Typography>
                 {data?.games?.map(({ id, description, participants }) => (
                     <Card key="{id}">
                         <CardHeader title={description}></CardHeader>
