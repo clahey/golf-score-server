@@ -27,7 +27,7 @@ export default function GameList() {
             <Stack>
                 <Typography variant="h4">Games</Typography>
                 {data?.games?.map(({ id, description, participants }) => (
-                    <Card key="{id}">
+                    <Card key={id}>
                         <CardHeader title={description}></CardHeader>
                         <CardContent>
                             <ul>

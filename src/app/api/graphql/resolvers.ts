@@ -1,6 +1,8 @@
+import { Course, Game, Player, PlayerWithScores } from "@/mongodb/types";
 import { Db, MongoClient, MongoServerError, ObjectId } from "mongodb";
 
-var clientPromise: Promise<MongoClient> | null = null;
+
+let clientPromise: Promise<MongoClient> | null = null;
 const testUser = new ObjectId(process.env.TEST_USER)
 
 function initializeClient(): Promise<MongoClient> {
@@ -29,22 +31,21 @@ async function withDatabase<T>(block: ((db: Db) => Promise<T>)): Promise<T> {
 
 export const resolvers = {
     Player: {
-        name: (player: any) => player.name,
-        id: (player: any) => player._id
+        name: (player: Player) => player.name,
+        id: (player: Player) => player._id
     },
     PlayerWithScores: {
-        player: async (playerWithScores: any) => withDatabase((db) =>
+        player: async (playerWithScores: PlayerWithScores) => withDatabase((db) =>
             db.collection("Players").findOne({ _id: playerWithScores.id })),
-        total: (playerWithScores: any) => playerWithScores.scores.reduce((a: number, b: number) => a + b, 0)
+        total: (playerWithScores: PlayerWithScores) => playerWithScores.scores.reduce((a: number, b: number | null) => a + (b ?? 0), 0)
     },
 
     Game: {
-        participants: (game: any) => game.players,
-        course: async (game: any) => withDatabase((db) => db.collection("Courses").findOne({ _id: game.course})),
-        description: async (game: any) => {
+        participants: (game: Game) => game.players,
+        course: async (game: Game) => withDatabase((db) => db.collection("Courses").findOne({ _id: game.course})),
+        description: async (game: Game) => {
             if (game.description) return game.description
             const course = await (game.course && withDatabase((db) => db.collection("Courses").findOne({ _id: game.course })))
-            const date = game.date
             const courseSegments = []
             if (course?.facility)
                 courseSegments.push(course?.facility)
@@ -57,7 +58,7 @@ export const resolvers = {
                 segments.push(`(${game.date.toLocaleDateString(undefined, {month: "short", day: "numeric"})})`)
             return segments.join(" ")
         },
-        id: (game: any) => game._id,
+        id: (game: Game) => game._id,
     },
 
     Query: {
