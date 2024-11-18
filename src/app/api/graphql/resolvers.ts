@@ -1,4 +1,4 @@
-import { Course, Game, Player, PlayerWithScores } from "@/mongodb/types";
+import { Game, Player, PlayerWithScores } from "@/mongodb/types";
 import { Db, MongoClient, MongoServerError, ObjectId } from "mongodb";
 
 
