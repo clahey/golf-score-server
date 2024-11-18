@@ -7,6 +7,7 @@ import { resolvers } from "./resolvers";
 const server = new ApolloServer({
     typeDefs,
     resolvers,
+    includeStacktraceInErrorResponses: true,
 });
 
 const handler = startServerAndCreateNextHandler<NextRequest>(
