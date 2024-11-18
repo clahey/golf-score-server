@@ -7,6 +7,7 @@ import { ApolloWrapper } from "./ApolloWrapper";
 import { BRANDING } from './branding';
 import "./globals.css";
 import { NAVIGATION } from './navigation';
+import { Suspense } from 'react';
 
 export default function RootLayout({
   children,
@@ -16,15 +17,17 @@ export default function RootLayout({
   return (
     <html>
       <body>
-        <AppRouterCacheProvider>
-          <AppProvider navigation={NAVIGATION} branding={BRANDING}>
-            <ApolloWrapper>
-              <DashboardLayout>
-                {children}
-              </DashboardLayout>
-            </ApolloWrapper>
-          </AppProvider>
-        </AppRouterCacheProvider>
+        <Suspense>
+          <AppRouterCacheProvider>
+            <AppProvider navigation={NAVIGATION} branding={BRANDING}>
+              <ApolloWrapper>
+                <DashboardLayout>
+                  {children}
+                </DashboardLayout>
+              </ApolloWrapper>
+            </AppProvider>
+          </AppRouterCacheProvider>
+        </Suspense>
       </body>
     </html>
   );
