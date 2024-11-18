@@ -64,7 +64,7 @@ export const resolvers = {
             if (courseSegments)
                 segments.push(courseSegments.join(" - "))
             if (game.date)
-                segments.push(`(${game.date.toLocaleDateString(undefined, {month: "short", day: "numeric"})})`)
+                segments.push(`(${game.date.toLocaleDateString(undefined, { month: "short", day: "numeric" })})`)
             return segments.join(" ")
         },
         id: (game: Game) => game._id,
