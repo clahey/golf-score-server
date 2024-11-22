@@ -8,18 +8,31 @@ import { BRANDING } from './branding';
 import "./globals.css";
 import { NAVIGATION } from './navigation';
 import { Suspense } from 'react';
+import { auth, signIn, signOut } from '@/auth';
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const session = await auth()
+
+  const authentication = {
+    signIn: async () => {
+      await signIn()
+    },
+    signOut: async () => {
+      await signOut()
+    },
+  };
+
   return (
     <html>
       <body>
         <Suspense>
           <AppRouterCacheProvider>
-            <AppProvider navigation={NAVIGATION} branding={BRANDING}>
+            <AppProvider navigation={NAVIGATION} branding={BRANDING} authentication={authentication} session={session}>
               <ApolloWrapper>
                 <DashboardLayout>
                   {children}
