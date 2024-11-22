@@ -35,7 +35,7 @@ function makeClient() {
 }
 
 // you need to create a component to wrap your app in
-export async function Providers({ children, authentication, session }: React.PropsWithChildren<{ authentication: Authentication, session: Session | null}>) {
+export function Providers({ children, authentication, session }: React.PropsWithChildren<{ authentication: Authentication, session: Session | null}>) {
     const authenticationProxy = {
         signIn: () => authentication.signIn(),
         signOut: () => authentication.signOut()
