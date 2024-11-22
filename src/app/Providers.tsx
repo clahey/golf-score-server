@@ -7,6 +7,11 @@ import {
     ApolloClient,
     InMemoryCache,
 } from "@apollo/experimental-nextjs-app-support";
+import { AppProvider, Authentication } from "@toolpad/core";
+import { Session } from "next-auth";
+import { BRANDING } from "./branding";
+import { NAVIGATION } from "./navigation";
+import { auth } from "@/auth";
 
 // have a function to create a client for you
 function makeClient() {
@@ -31,10 +36,16 @@ function makeClient() {
 }
 
 // you need to create a component to wrap your app in
-export function ApolloWrapper({ children }: React.PropsWithChildren) {
+export async function Providers({ children, authentication, session }: React.PropsWithChildren<{ authentication: Authentication, session: Session | null}>) {
+    const authenticationProxy = {
+        signIn: () => authentication.signIn(),
+        signOut: () => authentication.signOut()
+    }
     return (
-        <ApolloNextAppProvider makeClient={makeClient}>
-            {children}
-        </ApolloNextAppProvider>
+        <AppProvider navigation={NAVIGATION} branding={BRANDING} authentication={authenticationProxy} session={session}>
+            <ApolloNextAppProvider makeClient={makeClient}>
+                {children}
+            </ApolloNextAppProvider>
+        </AppProvider>
     );
 }

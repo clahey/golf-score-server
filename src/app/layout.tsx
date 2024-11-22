@@ -1,14 +1,13 @@
 
-import { DashboardLayout } from '@toolpad/core';
-import { AppProvider } from '@toolpad/core/nextjs';
+import { AppProvider, DashboardLayout } from '@toolpad/core';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 
-import { ApolloWrapper } from "./ApolloWrapper";
-import { BRANDING } from './branding';
+import { Providers } from "./Providers";
 import "./globals.css";
-import { NAVIGATION } from './navigation';
 import { Suspense } from 'react';
-import { auth, signIn, signOut } from '@/auth';
+import { signIn, signOut } from '@/auth';
+import { BRANDING } from './branding';
+import { NAVIGATION } from './navigation';
 
 export default async function RootLayout({
   children,
@@ -16,14 +15,16 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const session = await auth()
+  const session = null;//await auth();
 
   const authentication = {
     signIn: async () => {
-      await signIn()
+      "use server"
+      await signIn();
     },
     signOut: async () => {
-      await signOut()
+      "use server"
+      await signOut();
     },
   };
 
@@ -32,13 +33,11 @@ export default async function RootLayout({
       <body>
         <Suspense>
           <AppRouterCacheProvider>
-            <AppProvider navigation={NAVIGATION} branding={BRANDING} authentication={authentication} session={session}>
-              <ApolloWrapper>
-                <DashboardLayout>
-                  {children}
-                </DashboardLayout>
-              </ApolloWrapper>
-            </AppProvider>
+            <Providers authentication={authentication} session={session}>
+              <DashboardLayout>
+                {children}
+              </DashboardLayout>
+            </Providers>
           </AppRouterCacheProvider>
         </Suspense>
       </body>
