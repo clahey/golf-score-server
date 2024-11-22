@@ -1,13 +1,11 @@
 
-import { AppProvider, DashboardLayout } from '@toolpad/core';
+import { DashboardLayout } from '@toolpad/core';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 
 import { Providers } from "./Providers";
 import "./globals.css";
 import { Suspense } from 'react';
 import { signIn, signOut } from '@/auth';
-import { BRANDING } from './branding';
-import { NAVIGATION } from './navigation';
 
 export default async function RootLayout({
   children,

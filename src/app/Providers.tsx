@@ -11,7 +11,6 @@ import { AppProvider, Authentication } from "@toolpad/core";
 import { Session } from "next-auth";
 import { BRANDING } from "./branding";
 import { NAVIGATION } from "./navigation";
-import { auth } from "@/auth";
 
 // have a function to create a client for you
 function makeClient() {
