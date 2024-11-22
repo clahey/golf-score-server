@@ -11,7 +11,7 @@ export default function GameList() {
           id
           description
           participants {
-            player { name }
+            player { name id }
             total
           }
         }
@@ -32,7 +32,7 @@ export default function GameList() {
                         <CardContent>
                             <ul>
                                 {participants.map(p => (
-                                    <li key="{p.player.id}">{p.player?.name} - {p.total}</li>
+                                    <li key={p.player?.id}>{p.player?.name} - {p.total}</li>
                                 ))}
                             </ul>
                             </CardContent>

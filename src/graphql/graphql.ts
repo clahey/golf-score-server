@@ -16,9 +16,16 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type Course = {
+  __typename?: 'Course';
+  facility?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
 export type Game = {
   __typename?: 'Game';
-  description: Scalars['String']['output'];
+  course?: Maybe<Course>;
+  description?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
   participants: Array<PlayerWithScores>;
 };
@@ -50,7 +57,7 @@ export type QueryGamesArgs = {
 export type GetGamesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetGamesQuery = { __typename?: 'Query', games: Array<{ __typename?: 'Game', id: string, description: string, participants: Array<{ __typename?: 'PlayerWithScores', total: number, player?: { __typename?: 'Player', name: string } | null }> }> };
+export type GetGamesQuery = { __typename?: 'Query', games: Array<{ __typename?: 'Game', id: string, description?: string | null, participants: Array<{ __typename?: 'PlayerWithScores', total: number, player?: { __typename?: 'Player', name: string, id: string } | null }> }> };
 
 
-export const GetGamesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetGames"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"games"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"participants"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"player"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"total"}}]}}]}}]}}]} as unknown as DocumentNode<GetGamesQuery, GetGamesQueryVariables>;
+export const GetGamesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetGames"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"games"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"participants"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"player"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"total"}}]}}]}}]}}]} as unknown as DocumentNode<GetGamesQuery, GetGamesQueryVariables>;
