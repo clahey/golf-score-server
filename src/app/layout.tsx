@@ -5,7 +5,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { Providers } from "./Providers";
 import "./globals.css";
 import { Suspense } from 'react';
-import { signIn, signOut } from '@/auth';
+import { auth, signIn, signOut } from '@/auth';
 
 export default async function RootLayout({
   children,
@@ -13,7 +13,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const session = null;//await auth();
+  const session = await auth();
 
   const authentication = {
     signIn: async () => {
