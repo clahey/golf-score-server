@@ -14,5 +14,13 @@ export const { handlers, signIn, signOut, auth } =
                 VerificationTokens: "VerificationTokens",
             }
         }),
-        providers: [Google]
+        providers: [Google],
+        callbacks: {
+            session: async ({ session, token }) => {
+              if (session?.user && token.sub) {
+                session.user.id = token.sub;
+              }
+              return session;
+            },
+          },
     })

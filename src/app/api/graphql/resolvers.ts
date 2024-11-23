@@ -2,8 +2,6 @@ import { findById, findByOwner } from "@/mongodb/client";
 import { Course, Game, Player, PlayerWithScores } from "@/mongodb/types";
 import { ObjectId } from "mongodb";
 
-const testUser = new ObjectId(process.env.TEST_USER)
-
 export const resolvers = {
     Player: {
         id: (player: Player) => player._id
@@ -35,7 +33,19 @@ export const resolvers = {
     },
 
     Query: {
-        players: (): Promise<Player[]> => findByOwner("Players", testUser),
-        games: (): Promise<Game[]> => findByOwner("Games", testUser),
+        players: async (_parent: unknown, _args: unknown, context: { userId: string | null }): Promise<Player[]> => {
+            if (context.userId) {
+                return await findByOwner("Players", new ObjectId(context.userId))
+            } else {
+                return []
+            }
+        },
+        games: async(_parent: unknown, _args: unknown, context: { userId: string | null }): Promise<Game[]> => {
+            if (context.userId) {
+                return await findByOwner("Games", new ObjectId(context.userId))
+            } else {
+                return []
+            }
+        }
     }
 }
