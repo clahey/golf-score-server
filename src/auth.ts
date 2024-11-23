@@ -16,11 +16,11 @@ export const { handlers, signIn, signOut, auth } =
         }),
         providers: [Google],
         callbacks: {
-            session: async ({ session, token }) => {
-              if (session?.user && token.sub) {
-                session.user.id = token.sub;
-              }
-              return session;
+            session: async ({ session, user }) => {
+                if (session?.user && user.id) {
+                    session.user.id = user.id;
+                }
+                return session;
             },
-          },
+        },
     })
