@@ -18,11 +18,15 @@ function initializeClient(): Promise<MongoClient> {
     })
 }
 
-export async function withDatabase<T>(block: ((db: Db) => Promise<T>)): Promise<T> {
+export async function getDbClient(): Promise<MongoClient> {
     if (clientPromise == null) {
         clientPromise = initializeClient();
     }
-    const client = await clientPromise;
+    return await clientPromise;
+}
+
+export async function withDatabase<T>(block: ((db: Db) => Promise<T>)): Promise<T> {
+    const client = await getDbClient()
     const database = client.db("GolfScoreServer");
     return block(database)
 }
